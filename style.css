@@ -14,6 +14,7 @@ body{
     width: 100%;
     height: 100%;
     border-radius: 10px;
+    
 }
 .Deposit{
     background-color: slateblue;
@@ -29,6 +30,7 @@ body{
     padding: 50px;
     margin:70px 20px 0px 20px;
 }
+
 
 
 @media all and (max-width:440px){

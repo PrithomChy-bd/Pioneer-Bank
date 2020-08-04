@@ -1,26 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div id="login-area">
         <h1 class="text-center">Welcome To Pioneer Bank</h1>
         <div id="submit-area" class="mt-5 p-5 shadow-lg">
-            <h4>Login</h4>
+            <div class="bank-title ">
+                <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#user-info">
+                    user info
+                </button>
+                <br><br>
+                <h4>Login</h4>
+
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="user-info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Pioneer Bank User Information</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h3 class="text-center">Person-1</h3>
+                            <hr>
+                            <p><span>username : Prithom </span><br> <span>password : 01819</span></p>
+                            <h3 class="text-center">Person-2</h3>
+                            <hr>
+                            <p><span>username : Bank</span><br> <span>password : 12345</span></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <br>
-            <input class="form-control" type="email" placeholder="Enter your Email">
+            <input id="username" class="form-control" type="email" placeholder="Enter your Email">
             <br>
-            <input class="form-control" type="password" placeholder="Enter Your Password">
+            <input id="password" class="form-control" type="password" placeholder="Enter Your Password">
             <br>
             <button id="enter" class="btn btn-success">Enter</button>
         </div>
     </div>
     <div id="bank">
+        <button class="btn btn-primary float-right" id="logout">Logout</button>
+        <br><br><br>
         <div class="row">
             <div class="col-md-4">
                 <div class="Deposit status">
@@ -55,7 +92,8 @@
                 <div class="amount">
                     <h4>Withdraw</h4>
                     <br>
-                    <input id="WithdrawNumber" class="form-control" type="number" placeholder="$ Amount you want to Withdraw">
+                    <input id="WithdrawNumber" class="form-control" type="number"
+                        placeholder="$ Amount you want to Withdraw">
                     <br>
                     <button id="WithdrawButton" class="btn btn-success">Withdraw</button>
                 </div>
@@ -63,54 +101,87 @@
             </div>
         </div>
     </div>
-    
+
 
     <script>
-        var button = document.getElementById('enter');
-        button.addEventListener('click',function(){
-         document.getElementById('login-area').style.display ='none';
-        document.getElementById('bank').style.display ='block';
+        document.getElementById('enter').addEventListener('click', function () {
+          const user = document.getElementById('username').value;
+          const pass = document.getElementById('password').value;
+          const user1 = 'prithom';
+          const user2 = 'bank';
+          const pass1 = 2000;
+          const pass2 = 12345;
+          if(user==user1 && pass==pass1){
+              document.getElementById('login-area').style.display = 'none';
+              document.getElementById('bank').style.display = 'block';
+          }
+          else if(user==user2 && pass==pass2){
+              document.getElementById('login-area').style.display = 'none';
+              document.getElementById('bank').style.display = 'block';
+          }
+          else{
+              alert("Invalid username or password")
+          }
+        });
+
+
+        // logout topic
+
+        const logout = document.getElementById('logout').addEventListener('click', function() {
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('login-area').style.display = "block";
+        })
+
+        // Logout Topics End...
+
+        var DepositButton = document.getElementById('AmountButton');
+        var Click = DepositButton.addEventListener('click', function () {
+            var inputAmount = document.getElementById('AmountNumber').value;
+            var DepositNumber = parseFloat(inputAmount);
+
+
+            UpdateSpanText('CurrentDeposit', DepositNumber);
+            UpdateSpanText('CurrentBalance', DepositNumber);
+            document.getElementById('AmountNumber').value = '';
+            function UpdateSpanText(id, DepositNumber) {
+                var Current = document.getElementById(id).innerText;
+                var CurrentNumber = parseFloat(Current);
+                var total = DepositNumber + CurrentNumber;
+                document.getElementById(id).innerText = total;
+            }
+
+        })
+        // Withdraw Topics
+
+        var WithdrawButton = document.getElementById('WithdrawButton');
+        var Click = WithdrawButton.addEventListener('click', function () {
+            var Amount = document.getElementById('WithdrawNumber').value;
+            var WithDrawNum = parseFloat(Amount);
+
+
+            UpdateSpanText('CurrentWithdraw', WithDrawNum);
+            UpdateSpanText('CurrentBalance', -1 * WithDrawNum);
+            document.getElementById('WithdrawNumber').value = '';
+            function UpdateSpanText(id, WithDrawNum) {
+                var Current = document.getElementById(id).innerText;
+                var CurrentNumber = parseFloat(Current);
+                var total = WithDrawNum + CurrentNumber;
+                document.getElementById(id).innerText = total;
+            }
+
         })
 
 
-        var DepositButton = document.getElementById('AmountButton'); 
-        var Click = DepositButton.addEventListener('click',function(){
-        var inputAmount = document.getElementById('AmountNumber').value;
-        var DepositNumber = parseFloat(inputAmount);
-
-
-        UpdateSpanText('CurrentDeposit', DepositNumber);
-        UpdateSpanText('CurrentBalance', DepositNumber);
-        document.getElementById('AmountNumber').value='';
-        function UpdateSpanText(id,DepositNumber){
-        var Current = document.getElementById(id).innerText;
-        var CurrentNumber = parseFloat(Current);
-        var total = DepositNumber + CurrentNumber;
-        document.getElementById(id).innerText = total; 
-        }
-        
-    })
-// Withdraw Topics
-
-    var WithdrawButton = document.getElementById('WithdrawButton');
-    var Click = WithdrawButton.addEventListener('click',function(){
-    var Amount = document.getElementById('WithdrawNumber').value;
-    var WithDrawNum = parseFloat(Amount);
-
-        
-    UpdateSpanText('CurrentWithdraw', WithDrawNum);
-    UpdateSpanText('CurrentBalance', -1 * WithDrawNum);
-    document.getElementById('WithdrawNumber').value='';
-        function UpdateSpanText(id,WithDrawNum){
-        var Current = document.getElementById(id).innerText;
-        var CurrentNumber = parseFloat(Current);
-        var total = WithDrawNum + CurrentNumber;
-        document.getElementById(id).innerText = total; 
-        }
-
-    })
-
-
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
